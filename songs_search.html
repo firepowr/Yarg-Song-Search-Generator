@@ -1,0 +1,86 @@
+﻿<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>Coach's Searchable Songs — Artist & Title</title>
+<style>
+  body{font-family:system-ui,-apple-system,Segoe UI,Roboto,"Helvetica Neue",Arial;margin:0;background:#0f1724;color:#e6eef3;min-height:100vh;padding:28px}
+  .wrap{max-width:1100px;margin:0 auto}
+  h1{font-size:20px;margin:0;margin-bottom:12px}
+  .search-row{display:flex;gap:10px;margin-bottom:14px;align-items:center}
+  .search{flex:1;min-width:180px;padding:10px;border-radius:10px;border:1px solid rgba(255,255,255,0.2);background:rgba(255,255,255,0.05);color:inherit}
+  .filters{display:flex;gap:8px;align-items:center;font-size:13px}
+  .results{background:rgba(255,255,255,0.02);padding:12px;border-radius:10px;border:1px solid rgba(255,255,255,0.05);min-height:220px}
+  table{width:100%;border-collapse:collapse}
+  th,td{padding:8px 6px;text-align:left;border-bottom:1px dashed rgba(255,255,255,0.07)}
+  th{color:#9aa6b2;font-weight:600;font-size:13px}
+  .highlight{background:yellow;color:#000;padding:2px 4px;border-radius:4px}
+  .small{font-size:13px;color:#9aa6b2}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <h1>Coach's Song & Artist Search</h1>
+  <div class="search-row">
+    <input id="q" class="search" placeholder="Search artist or song..." />
+    <div class="filters">
+      <label><input type="checkbox" id="matchArtist" checked /> Artist</label>
+      <label><input type="checkbox" id="matchTitle" checked /> Song</label>
+      <span>Results: <span id="count">0</span></span>
+    </div>
+  </div>
+  <div class="results">
+    <table>
+      <thead><tr><th style="width:36px">#</th><th>Artist</th><th>Song</th></tr></thead>
+      <tbody id="tbody"><tr><td colspan="3" class="small">Type in the box above to search.</td></tr></tbody>
+    </table>
+  </div>
+</div>
+
+<script>
+// embedded dataset
+const entries = 
+
+// search logic
+const tbody=document.getElementById('tbody');
+const qEl=document.getElementById('q');
+const matchArtistEl=document.getElementById('matchArtist');
+const matchTitleEl=document.getElementById('matchTitle');
+const countEl=document.getElementById('count');
+
+function highlightText(text,q){
+  if(!q) return escapeHtml(text);
+  const re=new RegExp(escapeRegExp(q),'ig');
+  return escapeHtml(text).replace(re,m=>`<span class="highlight">${m}</span>`);
+}
+function escapeHtml(s){return s.replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;","\"":"&quot;","'":"&#39;"}[c]));}
+function escapeRegExp(s){return s.replace(/[.*+?^${}()|[\]\\]/g,'\\$&');}
+
+function searchAndShow(){
+  const q=qEl.value.trim();
+  const matchA=matchArtistEl.checked;
+  const matchT=matchTitleEl.checked;
+  const qlc=q.toLowerCase();
+  let results=entries.filter(e=>{
+    if(!q) return true;
+    return (matchA && e.artist.toLowerCase().includes(qlc)) || (matchT && e.title.toLowerCase().includes(qlc));
+  });
+  renderResults(results,q);
+}
+function renderResults(list,q){
+  tbody.innerHTML='';
+  if(list.length===0){tbody.innerHTML='<tr><td colspan="3" class="small">No matches.</td></tr>'; countEl.textContent='0';return;}
+  list.forEach((e,i)=>{
+    const tr=document.createElement('tr');
+    tr.innerHTML=`<td>${i+1}</td><td>${highlightText(e.artist,q)}</td><td>${highlightText(e.title,q)}</td>`;
+    tbody.appendChild(tr);
+  });
+  countEl.textContent=String(list.length);
+}
+qEl.addEventListener('input',searchAndShow);
+matchArtistEl.addEventListener('change',searchAndShow);
+matchTitleEl.addEventListener('change',searchAndShow);
+</script>
+</body>
+</html>
