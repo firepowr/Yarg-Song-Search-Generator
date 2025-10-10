@@ -3,8 +3,8 @@ Quickly create a web-based HTML file to search for Artist and Songs from Yarg's 
 
 1. Unzip the contents into its own directory.
 	-You'll see two files:  
-		make_song_html (batch file)
-		songs_search  (search template)
+		-make_song_html (batch file)<Br>
+		-songs_search  (search template)
 
 2. In Yarg, export song list in plain text and save the file as "songslist.txt" in the same directory noted above
 
