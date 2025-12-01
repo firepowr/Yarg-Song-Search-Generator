@@ -1,6 +1,8 @@
 # Yarg-Song-Search-Generator
 Quickly create a web-based HTML file to search for Artist and Songs from Yarg's Plain Text Export
 
+*NOTE* as of nightly build b3331 the song export file is not compatible with the script. As a workaround, you'll have to use a prior build to generate the export song file.
+
 1. Unzip the contents into its own directory.
 	-You'll see two files:  
 		-make_song_html (batch file)<Br>
