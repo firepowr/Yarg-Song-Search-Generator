@@ -1,18 +1,18 @@
 # Yarg-Song-Search-Generator
-Quickly create a web-based HTML file to search for Artist and Songs from Yarg's Plain Text Export
+Updated 2026-06-29
 
-*NOTE* as of nightly build b3331 the song export file is not compatible with the script. As a workaround, you'll have to use a prior build to generate the export song file.
+Quickly create a web-based HTML file to search for Artist and Songs from Yarg's CSV Export
 
 1. Unzip the contents into its own directory.
 	-You'll see two files:  
 		-make_song_html (batch file)<Br>
 		-songs_search  (search template)
 
-2. In Yarg, export song list in plain text and save the file as "songslist.txt" in the same directory noted above
+2. In Yarg, export song list as CSV, "songs.csv", in the same directory noted above
 
-3. Double-click on "make_song_html" a command prompt window will load, and when finish Press any key to close it out.
+3. Double-click on "make_song_html.bat" a command prompt window will open, Press any key to start. It'll auto close when completed.
 
-4. In the directory you'll have a new file "songs_search_updated" it'll have all the songs imported from your songslist.txt
+4. In the directory your "songs_search.html" will be updated and copy of your old file will be named "songs_search.backup.html"
 
 
 Notes:  Feel to modify the "songs_search.html" from Line 40 and above to make it unique to you.
